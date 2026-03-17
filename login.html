@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex items-center justify-center" style="background-color: #09090b;">
+
+    <div class="space-y-6 p-10 rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl max-w-sm w-full mx-4">
+
+        <!-- Back link -->
+        <a href="hello-world.html" class="inline-flex items-center text-sm text-zinc-400 hover:text-white transition-colors">
+            <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back
+        </a>
+
+        <!-- Header -->
+        <div class="space-y-1">
+            <h1 class="text-2xl font-bold tracking-tight text-white">Welcome back</h1>
+            <p class="text-sm text-zinc-400">Enter your credentials to sign in</p>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-4" onsubmit="handleLogin(event)">
+            <div class="space-y-1.5">
+                <label class="text-sm font-medium text-zinc-300" for="email">Email</label>
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500 transition-colors"
+                />
+            </div>
+
+            <div class="space-y-1.5">
+                <label class="text-sm font-medium text-zinc-300" for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    required
+                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500 transition-colors"
+                />
+            </div>
+
+            <div id="error-msg" class="hidden text-sm text-red-400 rounded-md border border-red-900 bg-red-950 px-3 py-2">
+                Invalid email or password.
+            </div>
+
+            <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center rounded-md bg-white px-5 py-2.5 text-sm font-medium text-zinc-900 shadow hover:bg-zinc-100 transition-colors"
+            >
+                Sign In
+            </button>
+        </form>
+
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            // Demo: accept any non-empty credentials and redirect back
+            if (email && password) {
+                errorMsg.classList.add('hidden');
+                window.location.href = 'hello-world.html';
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+    </script>
+
+</body>
+</html>
