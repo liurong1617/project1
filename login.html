@@ -3,74 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        @media (prefers-reduced-motion: no-preference) {
+            .fade-in { animation: fadeUp 0.45s ease both; }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: linear-gradient(145deg, #18181b, #111113);
+        }
+        input:focus {
+            outline: none;
+            border-color: #52525b;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+        }
+        .btn-primary {
+            transition: background 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+        }
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 0 24px rgba(255,255,255,0.12);
+            transform: translateY(-1px);
+        }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        input { transition: border-color 200ms ease, box-shadow 200ms ease; }
+    </style>
 </head>
-<body class="min-h-screen flex items-center justify-center" style="background-color: #09090b;">
+<body class="min-h-screen flex items-center justify-center px-4" style="background-color: #09090b;">
 
-    <div class="space-y-6 p-10 rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl max-w-sm w-full mx-4">
+    <!-- Background glow -->
+    <div class="fixed inset-x-0 top-0 h-72 pointer-events-none" style="background: radial-gradient(ellipse 50% 30% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%);"></div>
 
-        <!-- Back link -->
-        <a href="hello-world.html" class="inline-flex items-center text-sm text-zinc-400 hover:text-white transition-colors">
-            <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="fade-in card rounded-2xl border border-zinc-800 shadow-2xl w-full max-w-sm p-8 space-y-7">
+
+        <!-- Back -->
+        <a href="hello-world.html" class="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors duration-200">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
-            Back
+            Back to home
         </a>
 
         <!-- Header -->
-        <div class="space-y-1">
+        <div class="space-y-1.5">
             <h1 class="text-2xl font-bold tracking-tight text-white">Welcome back</h1>
-            <p class="text-sm text-zinc-400">Enter your credentials to sign in</p>
+            <p class="text-sm text-zinc-500">Sign in to your account to continue</p>
         </div>
 
         <!-- Form -->
-        <form class="space-y-4" onsubmit="handleLogin(event)">
-            <div class="space-y-1.5">
-                <label class="text-sm font-medium text-zinc-300" for="email">Email</label>
+        <form class="space-y-5" onsubmit="handleLogin(event)" novalidate>
+
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-zinc-300" for="email">Email address</label>
                 <input
                     id="email"
                     type="email"
                     placeholder="you@example.com"
+                    autocomplete="email"
                     required
-                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500 transition-colors"
+                    class="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm text-white placeholder-zinc-600"
                 />
             </div>
 
-            <div class="space-y-1.5">
-                <label class="text-sm font-medium text-zinc-300" for="password">Password</label>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <label class="block text-sm font-medium text-zinc-300" for="password">Password</label>
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-300 transition-colors duration-200">Forgot password?</a>
+                </div>
                 <input
                     id="password"
                     type="password"
                     placeholder="••••••••"
+                    autocomplete="current-password"
                     required
-                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500 transition-colors"
+                    class="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm text-white placeholder-zinc-600"
                 />
             </div>
 
-            <div id="error-msg" class="hidden text-sm text-red-400 rounded-md border border-red-900 bg-red-950 px-3 py-2">
-                Invalid email or password.
+            <!-- Error -->
+            <div id="error-msg" class="hidden flex items-center gap-2 text-sm text-red-400 rounded-lg border border-red-900/60 bg-red-950/40 px-4 py-2.5">
+                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+                Invalid email or password. Please try again.
             </div>
 
             <button
+                id="submit-btn"
                 type="submit"
-                class="w-full inline-flex items-center justify-center rounded-md bg-white px-5 py-2.5 text-sm font-medium text-zinc-900 shadow hover:bg-zinc-100 transition-colors"
+                class="btn-primary w-full flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 shadow"
             >
-                Sign In
+                <span id="btn-text">Sign In</span>
+                <svg id="btn-spinner" class="hidden h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
             </button>
+
         </form>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-3">
+            <div class="flex-1 h-px bg-zinc-800"></div>
+            <span class="text-xs text-zinc-600">or</span>
+            <div class="flex-1 h-px bg-zinc-800"></div>
+        </div>
+
+        <p class="text-center text-sm text-zinc-500">
+            Don't have an account?
+            <a href="#" class="text-zinc-300 font-medium hover:text-white transition-colors duration-200 underline underline-offset-2">Sign up free</a>
+        </p>
 
     </div>
 
@@ -80,11 +127,16 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorMsg = document.getElementById('error-msg');
+            const btn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const spinner = document.getElementById('btn-spinner');
 
-            // Demo: accept any non-empty credentials and redirect back
             if (email && password) {
                 errorMsg.classList.add('hidden');
-                window.location.href = 'hello-world.html';
+                btn.disabled = true;
+                btnText.textContent = 'Signing in…';
+                spinner.classList.remove('hidden');
+                setTimeout(() => { window.location.href = 'hello-world.html'; }, 800);
             } else {
                 errorMsg.classList.remove('hidden');
             }

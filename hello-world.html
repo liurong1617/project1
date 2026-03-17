@@ -5,43 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        @media (prefers-reduced-motion: no-preference) {
+            .fade-in { animation: fadeUp 0.5s ease both; }
+            .fade-in-delay { animation: fadeUp 0.5s ease 0.15s both; }
+            .fade-in-delay-2 { animation: fadeUp 0.5s ease 0.3s both; }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .glow {
+            background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 70%);
+        }
+        .btn-primary {
+            transition: background 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
+        }
+        .btn-outline:hover { transform: translateY(-1px); }
+    </style>
 </head>
-<body class="min-h-screen bg-background flex items-center justify-center" style="background-color: #09090b;">
+<body class="min-h-screen flex flex-col items-center justify-center px-4" style="background-color: #09090b;">
 
-    <div class="text-center space-y-6 p-10 rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl max-w-md w-full mx-4">
+    <!-- Subtle top glow -->
+    <div class="fixed inset-x-0 top-0 h-64 pointer-events-none glow"></div>
 
-        <div class="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 text-xs font-medium text-zinc-400 tracking-wide uppercase">
-            Welcome
+    <div class="text-center space-y-8 max-w-lg w-full">
+
+        <!-- Badge -->
+        <div class="fade-in inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900 px-4 py-1.5 text-xs font-medium text-zinc-400 tracking-widest uppercase">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Live · Hello World
         </div>
 
-        <h1 class="text-5xl font-bold tracking-tight text-white">
-            Hello, World!
-        </h1>
+        <!-- Heading -->
+        <div class="fade-in-delay space-y-4">
+            <h1 class="text-6xl sm:text-7xl font-extrabold tracking-tight text-white leading-none">
+                Hello,<br><span style="background: linear-gradient(135deg,#fff 30%,#a1a1aa); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">World.</span>
+            </h1>
+            <p class="text-zinc-400 text-lg leading-relaxed max-w-sm mx-auto">
+                A beautifully crafted starting point — designed with clarity, speed, and accessibility in mind.
+            </p>
+        </div>
 
-        <p class="text-zinc-400 text-base leading-relaxed">
-            A simple greeting, beautifully styled with the shadcn design system.
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <button class="inline-flex items-center justify-center rounded-md bg-white px-5 py-2.5 text-sm font-medium text-zinc-900 shadow hover:bg-zinc-100 transition-colors">
+        <!-- CTA Buttons -->
+        <div class="fade-in-delay-2 flex flex-col sm:flex-row gap-3 justify-center">
+            <button class="btn-primary inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-zinc-900 shadow-lg">
                 Get Started
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
             </button>
-            <a href="login.html" class="inline-flex items-center justify-center rounded-md border border-zinc-700 bg-transparent px-5 py-2.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors">
-                Login
+            <a href="login.html" class="btn-outline inline-flex items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 px-6 py-3 text-sm font-semibold text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-600">
+                Sign In
             </a>
         </div>
+
+        <!-- Footer note -->
+        <p class="fade-in-delay-2 text-xs text-zinc-600">
+            No account yet? <a href="login.html" class="text-zinc-400 hover:text-white transition-colors duration-200 underline underline-offset-2">Create one free</a>
+        </p>
 
     </div>
 
